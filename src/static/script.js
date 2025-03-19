@@ -33,7 +33,7 @@ function sendLocation() {
                     // console.error('Error sending location:', error);
                 });
             },
-            function (error) {
+            function (error) { 
                 // console.error('Geolocation error:', error);
             },
             {
