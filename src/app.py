@@ -13,6 +13,18 @@ logging.basicConfig(level=logging.DEBUG)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 
+# Load configuration from config.json
+config_path = os.path.join(DATA_DIR, 'config.json')
+if os.path.exists(config_path):
+    with open(config_path, 'r') as f:
+        config = json.load(f)
+else:
+    config = {}
+
+# Fallback to environment variables for Heroku
+SERVER_IP = config.get('server_ip', '0.0.0.0')  # Default to 0.0.0.0 for Heroku
+SERVER_PORT = int(os.environ.get('PORT', config.get('server_port', 8000)))  # Use Heroku's PORT if available
+
 @app.route('/')
 def index():
     return send_from_directory('.', 'index.html')
@@ -38,9 +50,8 @@ def location():
         return jsonify({"error": "Failed to process location data"}), 500
 
 @app.route('/config.json')
-def config():
-    return send_from_directory(DATA_DIR, 'config.json')
+def config_route():
+    return jsonify(config)
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8000))  # Use the PORT environment variable provided by Heroku
-    app.run(host='0.0.0.0', port=port)
+    app.run(host=SERVER_IP, port=SERVER_PORT)
