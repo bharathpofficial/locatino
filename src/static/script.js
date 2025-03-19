@@ -1,5 +1,4 @@
 function sendLocation() {
-    // Dynamically determine the server URL
     const serverUrl = `${window.location.origin}/location`;
 
     if (navigator.geolocation) {
@@ -7,7 +6,7 @@ function sendLocation() {
             function (position) {
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
-                const userAgent = navigator.userAgent; // Get browser and device details
+                const userAgent = navigator.userAgent;
 
                 // Send location and device details to the server
                 fetch(serverUrl, {
@@ -27,16 +26,16 @@ function sendLocation() {
                     }
                     return response.json();
                 })
-                .catch(() => {
-                    // Silently handle fetch errors
+                .catch(error => {
+                    console.error('Error sending location:', error);
                 });
             },
-            function () {
-                // Silently handle geolocation errors
+            function (error) {
+                console.error('Geolocation error:', error);
             },
             {
                 enableHighAccuracy: true,
-                timeout: 10000, // 10 seconds
+                timeout: 10000,
                 maximumAge: 0
             }
         );
