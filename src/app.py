@@ -42,6 +42,5 @@ def config():
     return send_from_directory(DATA_DIR, 'config.json')
 
 if __name__ == '__main__':
-    cert_path = os.path.join(DATA_DIR, 'cert.pem')
-    key_path = os.path.join(DATA_DIR, 'key.pem')
-    app.run(ssl_context=(cert_path, key_path), host='0.0.0.0', port=8000)
+    port = int(os.environ.get('PORT', 8000))  # Use the PORT environment variable provided by Heroku
+    app.run(host='0.0.0.0', port=port)
