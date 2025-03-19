@@ -16,8 +16,8 @@ if db_url:
     db_url = db_url.replace("mysql://", "")  # Remove the "mysql://" prefix
     db_user, rest = db_url.split(":", 1)  # Split at the first ":"
     db_password, rest = rest.split("@", 1)  # Split at the "@"
-    db_host, rest = rest.split("/", 1)  # Split at the first "/"
-    db_name = rest.split("?", 1)[0]  # Get the database name before any query parameters
+    db_host_port, db_name = rest.split("/", 1)  # Split at the first "/"
+    db_host = db_host_port.split(":")[0]  # Extract the host (ignore the port)
 
     # Establish the database connection
     db_connection = mysql.connector.connect(
