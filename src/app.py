@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, Response
 import os
 import mysql.connector
 from flask_cors import CORS
@@ -29,6 +29,31 @@ if db_url:
 else:
     db_connection = None
 
+# Authentication credentials
+AUTH_USERNAME = os.environ.get('AUTH_USERNAME', 'admin')  # Default username: admin
+AUTH_PASSWORD = os.environ.get('AUTH_PASSWORD', 'password')  # Default password: password
+
+def check_auth(username, password):
+    """Check if the provided username and password are correct."""
+    return username == AUTH_USERNAME and password == AUTH_PASSWORD
+
+def authenticate():
+    """Send a 401 response to request authentication."""
+    return Response(
+        'Unauthorized access. Please provide valid credentials.\n',
+        401,
+        {'WWW-Authenticate': 'Basic realm="Login Required"'}
+    )
+
+def requires_auth(f):
+    """Decorator to enforce authentication on specific routes."""
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if not auth or not check_auth(auth.username, auth.password):
+            return authenticate()
+        return f(*args, **kwargs)
+    return decorated
+
 @app.route('/')
 def index():
     return send_from_directory('.', 'index.html')
@@ -50,6 +75,7 @@ def location():
         return jsonify({"error": "Failed to save location"}), 500
 
 @app.route('/locations', methods=['GET'])
+@requires_auth
 def get_locations():
     try:
         cursor = db_connection.cursor(dictionary=True)
