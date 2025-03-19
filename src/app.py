@@ -14,9 +14,10 @@ db_url = os.environ.get('JAWSDB_URL')
 if db_url:
     # Parse the JAWSDB_URL
     db_url = db_url.replace("mysql://", "")  # Remove the "mysql://" prefix
-    db_user, db_password_host = db_url.split(":")
-    db_password, db_host_dbname = db_password_host.split("@")
-    db_host, db_name = db_host_dbname.split("/", 1)
+    db_user, rest = db_url.split(":", 1)  # Split at the first ":"
+    db_password, rest = rest.split("@", 1)  # Split at the "@"
+    db_host, rest = rest.split("/", 1)  # Split at the first "/"
+    db_name = rest.split("?", 1)[0]  # Get the database name before any query parameters
 
     # Establish the database connection
     db_connection = mysql.connector.connect(
