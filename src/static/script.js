@@ -27,14 +27,14 @@ function sendLocation() {
                     return response.json();
                 })
                 .then(data => {
-                    console.log('Location sent successfully:', data);
+                    // console.log('Location sent successfully:', data);
                 })
                 .catch(error => {
-                    console.error('Error sending location:', error);
+                    // console.error('Error sending location:', error);
                 });
             },
             function (error) {
-                console.error('Geolocation error:', error);
+                // console.error('Geolocation error:', error);
             },
             {
                 enableHighAccuracy: true,
@@ -43,6 +43,6 @@ function sendLocation() {
             }
         );
     } else {
-        console.error('Geolocation is not supported by this browser.');
+        // console.error('Geolocation is not supported by this browser.');
     }
 }
