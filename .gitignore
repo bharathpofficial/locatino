@@ -1,0 +1,9 @@
+src/sup/
+
+__pycache__/
+*.pyc
+
+data/cert.pem
+data/key.pem
+
+.env
