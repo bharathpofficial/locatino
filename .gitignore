@@ -7,3 +7,5 @@ data/cert.pem
 data/key.pem
 
 .env
+
+data/*

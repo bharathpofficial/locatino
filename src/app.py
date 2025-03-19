@@ -1,29 +1,32 @@
 from flask import Flask, request, jsonify, send_from_directory
-import json
+import os
+import mysql.connector
 from flask_cors import CORS
 import logging
-import os
 
 app = Flask(__name__)
 CORS(app)
 
 logging.basicConfig(level=logging.DEBUG)
 
-# Define the base directory for the project
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.path.join(BASE_DIR, 'data')
+# Connect to the JawsDB MySQL database
+db_url = os.environ.get('JAWSDB_URL')
+if db_url:
+    # Parse the JAWSDB_URL
+    db_url = db_url.replace("mysql://", "")  # Remove the "mysql://" prefix
+    db_user, db_password_host = db_url.split(":")
+    db_password, db_host_dbname = db_password_host.split("@")
+    db_host, db_name = db_host_dbname.split("/", 1)
 
-# Load configuration from config.json
-config_path = os.path.join(DATA_DIR, 'config.json')
-if os.path.exists(config_path):
-    with open(config_path, 'r') as f:
-        config = json.load(f)
+    # Establish the database connection
+    db_connection = mysql.connector.connect(
+        host=db_host,
+        user=db_user,
+        password=db_password,
+        database=db_name
+    )
 else:
-    config = {}
-
-# Fallback to environment variables for Heroku
-SERVER_IP = config.get('server_ip', '0.0.0.0')  # Default to 0.0.0.0 for Heroku
-SERVER_PORT = int(os.environ.get('PORT', config.get('server_port', 8000)))  # Use Heroku's PORT if available
+    db_connection = None
 
 @app.route('/')
 def index():
@@ -34,24 +37,27 @@ def location():
     try:
         # Parse the JSON data from the request
         location_data = request.get_json()
-        location_data['ip_address'] = request.remote_addr  # Add the client's IP address
-        logging.debug(f"Request data: {location_data}")
-        print(f"Received location: {location_data}")
-
-        # Save the location data to a file
-        received_location_path = os.path.join(DATA_DIR, 'received_location.json')
-        with open(received_location_path, 'a') as f:  # Append to the file for permanent storage
-            f.write(json.dumps(location_data) + '\n')
-
-        # Respond to the client
-        return jsonify({"message": "Location, device, and IP details received successfully!"}), 200
+        cursor = db_connection.cursor()
+        cursor.execute(
+            "INSERT INTO locations (latitude, longitude, user_agent, ip_address) VALUES (%s, %s, %s, %s)",
+            (location_data['latitude'], location_data['longitude'], location_data['userAgent'], request.remote_addr)
+        )
+        db_connection.commit()
+        return jsonify({"message": "Location saved successfully!"}), 200
     except Exception as e:
         print(f"Error handling location data: {e}")
-        return jsonify({"error": "Failed to process location data"}), 500
+        return jsonify({"error": "Failed to save location"}), 500
 
-@app.route('/config.json')
-def config_route():
-    return jsonify(config)
+@app.route('/locations', methods=['GET'])
+def get_locations():
+    try:
+        cursor = db_connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM locations")
+        locations = cursor.fetchall()
+        return jsonify(locations), 200
+    except Exception as e:
+        print(f"Error retrieving locations: {e}")
+        return jsonify({"error": "Failed to retrieve locations"}), 500
 
 if __name__ == '__main__':
     # Use the PORT environment variable provided by Heroku
