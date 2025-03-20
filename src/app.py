@@ -3,6 +3,7 @@ import os
 import mysql.connector
 from flask_cors import CORS
 import logging
+from functools import wraps
 
 app = Flask(__name__)
 CORS(app)
@@ -45,6 +46,7 @@ def authenticate():
 
 def requires_auth(f):
     """Decorator to enforce authentication on specific routes."""
+    @wraps(f)  # This ensures the original function's name and metadata are preserved
     def decorated(*args, **kwargs):
         auth = request.authorization
         if not auth or not check_auth(auth.username, auth.password):
