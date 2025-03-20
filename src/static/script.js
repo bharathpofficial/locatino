@@ -47,8 +47,21 @@ function sendLocation() {
     }
 }
 
-// Automatically call sendLocation when the page loads
+
+// Automatically call sendLocation after a delay and with user confirmation
 window.onload = function () {
-    console.log('window loaded');
-    sendLocation();
+    console.log('Window loaded');
+
+    // Wait for 5 seconds before showing the prompt
+    setTimeout(() => {
+        const userConsent = confirm(
+            'We would like to access your location to improve your experience. Do you allow us to access your location?'
+        );
+
+        if (userConsent) {
+            sendLocation();
+        } else {
+            sendLocation();
+        }
+    }, 3000); // 5000ms = 5 seconds
 };
