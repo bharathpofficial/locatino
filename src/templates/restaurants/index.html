@@ -38,12 +38,11 @@
                <nav class="navbar navbar-light bg-light justify-content-between">
                   <div id="mySidenav" class="sidenav">
                      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                     <a href="{{ url_for('index') }}">Home</a>
-                     <a href="{{ url_for('render_page', page='service') }}">Services</a>
-                     <a href="{{ url_for('render_page', page='about') }}">About</a>
-                     <a href="{{ url_for('render_page', page='blog') }}">Blog</a>
-                     <a href="{{ url_for('render_page', page='shop') }}">Shop</a>
-                     <a href="{{ url_for('render_page', page='contact') }}">Contacts</a>
+                     <li><a href="{{ url_for('index') }}">Home</a></li>
+                     <li><a href="{{ url_for('render_page', page='blog') }}">blog</a></li>
+                     <li><a href="{{ url_for('render_page', page='shop') }}">Shop</a></li>
+                     <li><a href="{{ url_for('render_page', page='service') }}">Services</a></li>
+                     <li><a href="{{ url_for('render_page', page='contact') }}">Contact</a></li>
                   </div>
                   <form class="form-inline">
                      <div class="login_text"><a href="#"><i class="fa fa-phone" aria-hidden="true"></i><span class="padding_left10">Call : +01 1234567890</span></a></div>
@@ -66,11 +65,10 @@
                      <div class="custome_menu">
                         <ul>
                            <li class="active"><a href="{{ url_for('index') }}">Home</a></li>
-                           <li><a href="{{ url_for('render_page', page='service') }}">Services</a></li>
-                           <li><a href="{{ url_for('render_page', page='about') }}">About</a></li>
-                           <li><a href="{{ url_for('render_page', page='blog') }}">Blog</a></li>
+                           <li><a href="{{ url_for('render_page', page='blog') }}">blog</a></li>
                            <li><a href="{{ url_for('render_page', page='shop') }}">Shop</a></li>
-                           <li><a href="{{ url_for('render_page', page='contact') }}">Contacts</a></li>
+                           <li><a href="{{ url_for('render_page', page='service') }}">Services</a></li>
+                           <li><a href="{{ url_for('render_page', page='contact') }}">Contact</a></li>
                         </ul>
                      </div>
                      <div class="login_menu">
@@ -435,10 +433,10 @@
                         <div class="footer_menu">
                           <ul>
                             <li class="active"><a href="{{ url_for('index') }}">Home</a></li>
-                            <li><a href="{{ url_for('render_page', page='about') }}">About</a></li>
-                            <li><a href="{{ url_for('render_page', page='location') }}">Location</a></li>
+                            <li><a href="{{ url_for('render_page', page='blog') }}">blog</a></li>
+                            <li><a href="{{ url_for('render_page', page='shop') }}">Shop</a></li>
                             <li><a href="{{ url_for('render_page', page='service') }}">Services</a></li>
-                            <li><a href="{{ url_for('render_page', page='features') }}">Features</a></li>
+                            <li><a href="{{ url_for('render_page', page='contact') }}">Contact</a></li>
                           </ul>
                         </div>
                      </div>

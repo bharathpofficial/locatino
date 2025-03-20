@@ -43,12 +43,11 @@
                <nav class="navbar navbar-light bg-light justify-content-between">
                   <div id="mySidenav" class="sidenav">
                      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                     <a href="{{ url_for('index') }}">Home</a>
-                     <a href="{{ url_for('render_page', page='service') }}">Services</a>
-                     <a href="{{ url_for('render_page', page='about') }}">About</a>
-                     <a href="{{ url_for('render_page', page='blog') }}">Blog</a>
-                     <a href="{{ url_for('render_page', page='shop') }}">Shop</a>
-                     <a href="{{ url_for('render_page', page='contact') }}">Contacts</a>
+                     <a href="{{ url_for('index') }}" class="{% if request.path == '/' %}active{% endif %}">Home</a>
+                     <a href="{{ url_for('render_page', page='blog') }}" class="{% if request.path == '/blog' %}active{% endif %}">Blog</a>
+                     <a href="{{ url_for('render_page', page='shop') }}" class="{% if request.path == '/shop' %}active{% endif %}">Shop</a>
+                     <a href="{{ url_for('render_page', page='service') }}" class="{% if request.path == '/service' %}active{% endif %}">Services</a>
+                     <a href="{{ url_for('render_page', page='contact') }}" class="{% if request.path == '/contact' %}active{% endif %}">Contact</a>
                   </div>
                   <form class="form-inline ">
                      <div class="login_text"><a href="#"><i class="fa fa-phone" aria-hidden="true"></i><span class="padding_left10">Call : +01 1234567890</span></a></div>
@@ -70,12 +69,12 @@
                   <div class="menu_main">
                      <div class="custome_menu">
                         <ul>
-                           <li><a href="{{ url_for('index') }}">Home</a></li>
-                           <li><a href="{{ url_for('render_page', page='service') }}">Services</a></li>
-                           <li><a href="{{ url_for('render_page', page='about') }}">About</a></li>
-                           <li class="active"><a href="{{ url_for('render_page', page='blog') }}">Blog</a></li>
-                           <li><a href="{{ url_for('render_page', page='shop') }}">Shop</a></li>
-                           <li><a href="{{ url_for('render_page', page='contact') }}">Contacts</a></li>
+                           <li><a href="{{ url_for('index') }}" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
+                           <li><a href="{{ url_for('render_page', page='service') }}" class="{% if request.path == '/service' %}active{% endif %}">Services</a></li>
+                           <li><a href="{{ url_for('render_page', page='about') }}" class="{% if request.path == '/about' %}active{% endif %}">About</a></li>
+                           <li><a href="{{ url_for('render_page', page='blog') }}" class="{% if request.path == '/blog' %}active{% endif %}">Blog</a></li>
+                           <li><a href="{{ url_for('render_page', page='shop') }}" class="{% if request.path == '/shop' %}active{% endif %}">Shop</a></li>
+                           <li><a href="{{ url_for('render_page', page='contact') }}" class="{% if request.path == '/contact' %}active{% endif %}">Contacts</a></li>
                         </ul>
                      </div>
                      <div class="login_menu">
