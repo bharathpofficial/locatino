@@ -59,7 +59,7 @@ def get_selected_theme():
     cursor = db_connection.cursor(dictionary=True)
     cursor.execute("SELECT name FROM themes WHERE is_selected = TRUE")
     result = cursor.fetchone()
-    return result['name'] if result else 'amazon'  # Default to 'amazon'
+    return result['name'] if result else 'cafe'  # Default to 'cafe'
 
 def get_all_themes():
     """Fetch all available themes from the database."""
@@ -80,6 +80,14 @@ def set_selected_theme(theme):
 def index():
     theme = get_selected_theme()
     return render_template(f'{theme}/index.html')
+
+@app.route('/<page>')
+def render_page(page):
+    theme = get_selected_theme()
+    try:
+        return render_template(f'{theme}/{page}.html')
+    except:
+        return "Page not found", 404
 
 @app.route('/admin')
 @requires_auth
