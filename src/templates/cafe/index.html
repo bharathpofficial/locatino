@@ -8,10 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600&family=Oswald:wght@600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/all.min.css"> <!-- fontawesome -->
-    <!-- <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="css/tailwind.css">
-    <link rel="stylesheet" href="css/tooplate-antique-cafe.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cafe/css/all.min.css') }}"> <!-- fontawesome -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='cafe/css/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cafe/css/tooplate-antique-cafe.css') }}">
     
 <!--
 
@@ -23,7 +22,7 @@ https://www.tooplate.com/view/2126-antique-cafe
 </head>
 <body>    
     <!-- Intro -->
-    <div id="intro" class="parallax-window" data-parallax="scroll" data-image-src="img/antique-cafe-bg-01.jpg">
+    <div id="intro" class="parallax-window" data-parallax="scroll" data-image-src="{{ url_for('static', filename='cafe/img/antique-cafe-bg-01.jpg') }}">
         <nav id="tm-nav" class="fixed w-full">
             <div class="tm-container mx-auto px-2 md:py-6 text-right">
                 <button class="md:hidden py-2 px-2" id="menu-toggle"><i class="fas fa-2x fa-bars tm-text-gold"></i></button>
@@ -59,7 +58,7 @@ https://www.tooplate.com/view/2126-antique-cafe
         </div>        
     </div>
     <!-- Cafe Menu -->
-    <div id="menu" class="parallax-window" data-parallax="scroll" data-image-src="img/antique-cafe-bg-02.jpg">
+    <div id="menu" class="parallax-window" data-parallax="scroll" data-image-src="{{ url_for('static', filename='cafe/img/antique-cafe-bg-02.jpg') }}">
         <div class="container mx-auto tm-container py-24 sm:py-48">
             <div class="text-center mb-16">
                 <h2 class="bg-white tm-text-brown py-6 px-12 text-4xl font-medium inline-block rounded-md">Our Cafe Menu</h2>
@@ -67,7 +66,7 @@ https://www.tooplate.com/view/2126-antique-cafe
             <div class="flex flex-col lg:flex-row justify-around items-center">
                 <div class="flex-1 m-5 rounded-xl px-4 py-6 sm:px-8 sm:py-10 tm-bg-brown tm-item-container">
                     <div class="flex items-start mb-6 tm-menu-item">
-                        <img src="img/menu-item-1.jpg" alt="Image" class="rounded-md">
+                        <img src="{{ url_for('static', filename='cafe/img/menu-item-1.jpg') }}" alt="Image" class="rounded-md">
                         <div class="ml-3 sm:ml-6">
                             <h3 class="text-lg sm:text-xl mb-2 sm:mb-3 tm-text-yellow">Hot Cappuccino</h3>
                             <div class="text-white text-md sm:text-lg font-light mb-1">S $8.50</div>
@@ -75,7 +74,7 @@ https://www.tooplate.com/view/2126-antique-cafe
                         </div>                    
                     </div>
                     <div class="flex items-start mb-6 tm-menu-item">
-                        <img src="img/menu-item-2.jpg" alt="Image" class="rounded-md">
+                        <img src="{{ url_for('static', filename='cafe/img/menu-item-2.jpg') }}" alt="Image" class="rounded-md">
                         <div class="ml-3 sm:ml-6">
                             <h3 class="text-lg sm:text-xl mb-2 sm:mb-3 tm-text-yellow">Hot Americano</h3>
                             <div class="text-white text-md sm:text-lg font-light mb-1">S $9.50 . BG #544639</div>
@@ -83,7 +82,7 @@ https://www.tooplate.com/view/2126-antique-cafe
                         </div>                    
                     </div>
                     <div class="flex items-start mb-6 tm-menu-item">
-                        <img src="img/menu-item-3.jpg" alt="Image" class="rounded-md">
+                        <img src="{{ url_for('static', filename='cafe/img/menu-item-3.jpg') }}" alt="Image" class="rounded-md">
                         <div class="ml-3 sm:ml-6">
                             <h3 class="text-lg sm:text-xl mb-2 sm:mb-3 tm-text-yellow">Hot Latte #FC6</h3>
                             <div class="text-white text-md sm:text-lg font-light mb-1">M $11.75</div>
@@ -91,7 +90,7 @@ https://www.tooplate.com/view/2126-antique-cafe
                         </div>                    
                     </div>
                     <div class="flex items-start mb-6 tm-menu-item">
-                        <img src="img/menu-item-4.jpg" alt="Image" class="rounded-md">
+                        <img src="{{ url_for('static', filename='cafe/img/menu-item-4.jpg') }}" alt="Image" class="rounded-md">
                         <div class="ml-3 sm:ml-6">
                             <h3 class="text-lg sm:text-xl tm-text-yellow mb-1">Hot Espresso</h3>
                             <h3 class="text-lg sm:text-xl mb-2 sm:mb-3 tm-text-yellow">Hot Chocolate</h3>
@@ -106,7 +105,7 @@ https://www.tooplate.com/view/2126-antique-cafe
                             <div class="text-white text-md sm:text-lg font-light mb-1">Small $10</div>
                             <div class="text-white text-md sm:text-lg font-light">Large $15</div>
                         </div>
-                        <img src="img/menu-item-5.jpg" alt="Image" class="rounded-md">                   
+                        <img src="{{ url_for('static', filename='cafe/img/menu-item-5.jpg') }}" alt="Image" class="rounded-md">                   
                     </div>
                     <div class="flex items-start justify-end mb-6 tm-menu-item-2">
                         <div class="text-right mr-6">
@@ -114,7 +113,7 @@ https://www.tooplate.com/view/2126-antique-cafe
                             <div class="text-white text-md sm:text-lg font-light mb-1">Small $12.50</div>
                             <div class="text-white text-md sm:text-lg font-light">Large $16.50</div>
                         </div>
-                        <img src="img/menu-item-6.jpg" alt="Image" class="rounded-md">                    
+                        <img src="{{ url_for('static', filename='cafe/img/menu-item-6.jpg') }}" alt="Image" class="rounded-md">                    
                     </div>
                     <div class="flex items-start justify-end mb-6 tm-menu-item-2">
                         <div class="text-right mr-6">
@@ -122,7 +121,7 @@ https://www.tooplate.com/view/2126-antique-cafe
                             <div class="text-white text-md sm:text-lg font-light mb-1">Small $14</div>
                             <div class="text-white text-md sm:text-lg font-light">Large $18</div>
                         </div>   
-                        <img src="img/menu-item-7.jpg" alt="Image" class="rounded-md">                 
+                        <img src="{{ url_for('static', filename='cafe/img/menu-item-7.jpg') }}" alt="Image" class="rounded-md">                 
                     </div>
                     <div class="flex items-start justify-end mb-6 tm-menu-item-2">                    
                         <div class="text-right mr-6">
@@ -130,13 +129,13 @@ https://www.tooplate.com/view/2126-antique-cafe
                             <h3 class="text-lg sm:text-xl mb-2 sm:mb-3 tm-text-yellow">Iced Mocha</h3>
                             <div class="text-white text-md sm:text-lg font-light">Small $10 . Large $15</div>
                         </div> 
-                        <img src="img/menu-item-8.jpg" alt="Image" class="rounded-md">                   
+                        <img src="{{ url_for('static', filename='cafe/img/menu-item-8.jpg') }}" alt="Image" class="rounded-md">                   
                     </div>
                 </div>
             </div>
         </div>        
     </div>
-    <div id="about" class="parallax-window" data-parallax="scroll" data-image-src="img/antique-cafe-bg-03.jpg">
+    <div id="about" class="parallax-window" data-parallax="scroll" data-image-src="{{ url_for('static', filename='cafe/img/antique-cafe-bg-03.jpg') }}">
         <div class="container mx-auto tm-container py-24 sm:py-48">
             <div class="tm-item-container sm:ml-auto sm:mr-12 mx-auto sm:px-0 px-4">
                 <div class="bg-white bg-opacity-80 p-12 pb-14 rounded-xl mb-5">
@@ -155,7 +154,7 @@ https://www.tooplate.com/view/2126-antique-cafe
             </div>           
         </div>        
     </div>
-    <div id="contact" class="parallax-window relative" data-parallax="scroll" data-image-src="img/antique-cafe-bg-04.jpg">
+    <div id="contact" class="parallax-window relative" data-parallax="scroll" data-image-src="{{ url_for('static', filename='cafe/img/antique-cafe-bg-04.jpg') }}">
         <div class="container mx-auto tm-container pt-24 pb-48 sm:py-48">
             <div class="flex flex-col lg:flex-row justify-around items-center lg:items-stretch">
                 <div class="flex-1 rounded-xl px-10 py-12 m-5 bg-white bg-opacity-80 tm-item-container">
@@ -195,9 +194,9 @@ https://www.tooplate.com/view/2126-antique-cafe
         </div>        
     </div>    
 
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="js/parallax.min.js"></script>
-    <script src="js/jquery.singlePageNav.min.js"></script>
+    <script src="{{ url_for('static', filename='cafe/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='cafe/js/parallax.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='cafe/js/jquery.singlePageNav.min.js') }}"></script>
     <script>
 
         function checkAndShowHideMenu() {
