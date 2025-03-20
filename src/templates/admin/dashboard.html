@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/style.css') }}">
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <form method="POST" action="/admin/set-theme">
+        <label for="theme">Select Theme:</label>
+        <select name="theme" id="theme">
+            {% for theme in themes %}
+            <option value="{{ theme.name }}" {% if theme.is_selected %}selected{% endif %}>
+                {{ theme.name | capitalize }}
+            </option>
+            {% endfor %}
+        </select>
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>

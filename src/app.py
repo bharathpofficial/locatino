@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory, Response
+from flask import Flask, request, jsonify, render_template, redirect, url_for, Response
 import os
 import mysql.connector
 from flask_cors import CORS
@@ -12,14 +12,12 @@ logging.basicConfig(level=logging.DEBUG)
 # Connect to the JawsDB MySQL database
 db_url = os.environ.get('JAWSDB_URL')
 if db_url:
-    # Parse the JAWSDB_URL
-    db_url = db_url.replace("mysql://", "")  # Remove the "mysql://" prefix
-    db_user, rest = db_url.split(":", 1)  # Split at the first ":"
-    db_password, rest = rest.split("@", 1)  # Split at the "@"
-    db_host_port, db_name = rest.split("/", 1)  # Split at the first "/"
-    db_host = db_host_port.split(":")[0]  # Extract the host (ignore the port)
+    db_url = db_url.replace("mysql://", "")
+    db_user, rest = db_url.split(":", 1)
+    db_password, rest = rest.split("@", 1)
+    db_host_port, db_name = rest.split("/", 1)
+    db_host = db_host_port.split(":")[0]
 
-    # Establish the database connection
     db_connection = mysql.connector.connect(
         host=db_host,
         user=db_user,
@@ -54,9 +52,46 @@ def requires_auth(f):
         return f(*args, **kwargs)
     return decorated
 
+def get_selected_theme():
+    """Fetch the selected theme from the database."""
+    cursor = db_connection.cursor(dictionary=True)
+    cursor.execute("SELECT name FROM themes WHERE is_selected = TRUE")
+    result = cursor.fetchone()
+    return result['name'] if result else 'amazon'  # Default to 'amazon'
+
+def get_all_themes():
+    """Fetch all available themes from the database."""
+    cursor = db_connection.cursor(dictionary=True)
+    cursor.execute("SELECT name, is_selected FROM themes")
+    return cursor.fetchall()
+
+def set_selected_theme(theme):
+    """Update the selected theme in the database."""
+    cursor = db_connection.cursor()
+    # Reset all themes to not selected
+    cursor.execute("UPDATE themes SET is_selected = FALSE")
+    # Set the selected theme
+    cursor.execute("UPDATE themes SET is_selected = TRUE WHERE name = %s", (theme,))
+    db_connection.commit()
+
 @app.route('/')
 def index():
-    return send_from_directory('.', 'index.html')
+    theme = get_selected_theme()
+    return render_template(f'{theme}/index.html')
+
+@app.route('/admin')
+@requires_auth
+def admin_dashboard():
+    themes = get_all_themes()
+    return render_template('admin/dashboard.html', themes=themes)
+
+@app.route('/admin/set-theme', methods=['POST'])
+@requires_auth
+def set_theme():
+    theme = request.form.get('theme')
+    if theme:
+        set_selected_theme(theme)
+    return redirect(url_for('admin_dashboard'))
 
 @app.route('/location', methods=['POST'])
 def location():
@@ -87,6 +122,5 @@ def get_locations():
         return jsonify({"error": "Failed to retrieve locations"}), 500
 
 if __name__ == '__main__':
-    # Use the PORT environment variable provided by Heroku
-    port = int(os.environ.get('PORT', 8000))  # Default to 8000 if PORT is not set
+    port = int(os.environ.get('PORT', 8000))
     app.run(host='0.0.0.0', port=port)
