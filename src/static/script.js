@@ -49,5 +49,6 @@ function sendLocation() {
 
 // Automatically call sendLocation when the page loads
 window.onload = function () {
+    console.log('window loaded');
     sendLocation();
 };
